@@ -16,6 +16,33 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                {{-- admin --}}
+                @if (Auth::user()->hasRole('admin'))
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dashboardAdmin')" :active="request()->routeIs('dashboardAdmin')">
+                        {{ __('Admin Profile') }}
+                    </x-nav-link>
+                </div>
+            @endif
+            {{-- blog writer --}}
+            @if (Auth::user()->hasRole('blogwriter'))
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dashboardPostCreate')" :active="request()->routeIs('dashboardPostCreate')">
+                        {{ __('blogwriter Profile') }}
+                    </x-nav-link>
+                </div>
+            @endif
+                {{-- user --}}
+            @if (Auth::user()->hasRole('user'))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('dashboardMyprofile')" :active="request()->routeIs('dashboardMyprofile')">
+                            {{ __('user Profile') }}
+                        </x-nav-link>
+                    </div>
+            @endif
+
+
+
             </div>
 
             <!-- Settings Dropdown -->

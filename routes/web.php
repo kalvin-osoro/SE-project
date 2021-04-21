@@ -21,10 +21,29 @@ Route::get('/', function () {
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
+
 // auth route for both
 Route::group(['middleware'=> ['auth']], function(){
-    Route::get('/dashboard',[App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard',[App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+// for users
+Route::group(['middleware'=> ['auth','role:user']], function(){
+    // Route::get('/dashboard',[App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/myprofile', [DashboardController::class, 'myprofile'])->name('dashboardMyprofile');
+});
+
+// for blog writer
+Route::group(['middleware'=> ['auth','role:blogwriter']], function(){
+    // Route::get('/dashboard',[App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/postCreate', [DashboardController::class, 'postCreate'])->name('dashboardPostCreate');
+});
+
+// for admin
+Route::group(['middleware'=> ['auth','role:admin']], function(){
+    // Route::get('/dashboard',[App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/dashboardAdmin', [DashboardController::class, 'admin'])->name('dashboardAdmin');
 });
 
 require __DIR__.'/auth.php';
